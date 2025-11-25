@@ -1,0 +1,45 @@
+from maya import OpenMayaUI as omui
+from PySide2.QtCore import *
+from PySide2.QtGui import *
+from PySide2.QtWidgets import *
+from shiboken2 import wrapInstance
+
+
+class MayaToolUI(QWidget):
+
+    def __init__(self, parent=None):
+        super(MayaToolUI, self).__init__(parent)
+
+        self.setWindowFlags(Qt.Window)
+
+        # Set the object name     
+        self.setObjectName('MayaToolUI_uniqueId')
+
+        # Customize some window values
+        self.setWindowTitle('Maya UI Tool')
+        self.setGeometry(50, 50, 250, 150)
+
+        # Add widgets to your window
+        self.build_ui()
+        self.connect_ui()
+
+    def build_ui(self):
+        pass
+
+    def connect_ui(self):
+        pass
+
+    def action(self):
+        pass
+
+def get_main_window():
+    """Get the maya window pointer to parent this tool under."""
+    ptr = omui.MQtUtil.mainWindow()
+    # for Py3 use int() , for Py2 use long() , more info: https://docs.python.org/3/whatsnew/3.0.html#integers
+    maya_window = wrapInstance(int(ptr), QWidget)
+    return maya_window
+
+# Get Maya's main window to parent to
+maya_window = get_main_window()
+tool = MayaToolUI(maya_window)
+tool.show()
